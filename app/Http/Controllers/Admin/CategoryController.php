@@ -4,11 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
+use App\Interfaces\ICategoryRepository;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    protected $categoryRepo;
+
+    public function __construct(ICategoryRepository $categoryRepo)
+    {
+        $this->categoryRepo = $categoryRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +35,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $data['categories'] = Category::get();
+        // $data['categories'] = Category::get();
+        $data['categories'] = $this->categoryRepo->Get();
         return view("admin.category.create", $data);
     }
 
