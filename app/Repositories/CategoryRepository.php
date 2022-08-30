@@ -13,7 +13,24 @@ class CategoryRepository extends BaseRepository implements ICategoryRepository
         parent::_construct($model);
     }
 
-    public function DemonFunction()
+    public function GetMainCategory()
     {
+        return $this->model->where("parent_category_id", null)->get();
+    }
+
+    public function CreateCategory($request)
+    {
+        try {
+            $category = $this->model;
+            $category->name = $request->name;
+            $category->parent_category_id = $request->parent_category_id ? $request->parent_category_id : null;
+            $category->save();
+            flash('Successfully Saved')->success();
+
+            return true;
+        } catch (\Throwable $th) {
+            flash('Something went wrong.')->error();
+            return false;
+        }
     }
 }

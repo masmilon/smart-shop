@@ -14,16 +14,16 @@ class BaseRepository implements IBaseRepository
         $this->model = $model;
     }
 
-    public function Get()
+    public function myGet()
     {
-        $this->model->get();
+        return  $this->model->get();
     }
 
-    public function Find($id)
+    public function myFind($id)
     {
     }
 
-    public function Delete($id)
+    public function myDelete($id)
     {
     }
 }

@@ -17,6 +17,7 @@ class CategoryController extends Controller
         $this->categoryRepo = $categoryRepo;
     }
 
+
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +25,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data['categories'] = Category::get();
+        // $data['categories'] = Category::get();
+        $data['categories'] = $this->categoryRepo->GetMainCategory();
         return view("admin.category.index", $data);
     }
 
@@ -36,7 +38,7 @@ class CategoryController extends Controller
     public function create()
     {
         // $data['categories'] = Category::get();
-        $data['categories'] = $this->categoryRepo->Get();
+        $data['categories'] = $this->categoryRepo->myGet();
         return view("admin.category.create", $data);
     }
 
@@ -48,11 +50,7 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        $category = new Category();
-        $category->name = $request->name;
-        $category->parent_category_id = $request->parent_category_id ? $request->parent_category_id : null;
-        $category->save();
-        flash('Successfully Saved')->success();
+        $isSaved = $this->categoryRepo->CreateCategory($request);
         return redirect("/admin/categories");
     }
 
