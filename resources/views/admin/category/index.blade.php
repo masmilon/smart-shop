@@ -54,7 +54,16 @@
                                     <td>{{ $item->name }}</td>
                                     {{-- <td>{{ $item->parent_category->name ?? "" }}</td> --}}
                                     <td>{{ $item->parent_category_id ? $item->parent_category->name : "" }}</td>
-                                    <td></td>
+                                    <td>
+                                        <a href="{{ url("/admin/categories/$item->id/edit") }}" class="btn
+                                            btn-success">Edit</a>
+
+                                        <form action="{{ url("admin/categories/$item->id") }}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <input type="submit" value="Delete" class="btn btn-danger">
+                                        </form>
+                                    </td>
                                 </tr>
                                 @empty
                                 <tr>

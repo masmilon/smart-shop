@@ -73,7 +73,13 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['category'] = $this->categoryRepo->myFind($id);
+        $data['categories'] = $this->categoryRepo->myGet();
+        if ($data['category']) {
+            return view("admin.category.edit", $data);
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -85,7 +91,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->categoryRepo->UpdateCategory($request, $id);
+
+        return redirect('/admin/categories');
     }
 
     /**
@@ -96,6 +104,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->categoryRepo->myDelete($id);
+        return redirect()->back();
     }
 }

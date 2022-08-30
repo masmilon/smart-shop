@@ -33,4 +33,27 @@ class CategoryRepository extends BaseRepository implements ICategoryRepository
             return false;
         }
     }
+
+    public function UpdateCategory($request, $id)
+    {
+        try {
+            $category = $this->model->find($id);
+
+            if ($category) {
+
+                $category->name = $request->name;
+                $category->parent_category_id = $request->parent_category_id ? $request->parent_category_id : null;
+                $category->save();
+                flash('Successfully updated')->success();
+
+                return true;
+            } else {
+                flash('No item found.')->error();
+                return false;
+            }
+        } catch (\Throwable $th) {
+            flash('Something went wrong.')->error();
+            return false;
+        }
+    }
 }
