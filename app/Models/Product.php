@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+
+    public function getPriceAfterDiscountAttribute()
+    {
+        return $this->price - $this->discounted_price;
+    }
 }

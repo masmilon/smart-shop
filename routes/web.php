@@ -20,9 +20,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index']);
 
 
-Route::prefix('admin')->middleware(['auth', OnlyAdmin::class])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource("/categories", CategoryController::class);
-});
+Route::prefix('admin')->middleware(['auth', OnlyAdmin::class])->group(__DIR__ . '/web/admin.php');
 
 require __DIR__ . '/auth.php';
